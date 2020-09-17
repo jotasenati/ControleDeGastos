@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ControleDeGastos.Models.ControleGastos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Todos os Custos</h2>
+
+<p>
+    @Html.ActionLink("Novos Custos", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoGasto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.DataAlteracao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataExcluido)
+            </th>*@
+        <th>Oções</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.TipoGasto == "0")
+                {
+                    @("Selecione");
+                }
+                @if(item.TipoGasto == "1")
+                {
+                    @("Receita")
+                }
+                else
+                {
+                    @("Despesa")
+                }
+                
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCadastro)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.DataAlteracao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataExcluido)
+                </td>*@
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.CodGasto }) |
+                @Html.ActionLink("Detalhar", "Details", new { id = item.CodGasto }) |
+                @Html.ActionLink("Deletar", "Delete", new { id = item.CodGasto })
+            </td>
+        </tr>
+    }
+
+     
+    
+    <tr class="panel-footer">
+        <td>
+            Total
+        </td>
+        <td></td>
+        <td class="col-lg-offset-3">
+            @Model.Sum(x=>x.Valor)            
+        </td>
+    </tr>
+
+</table>
